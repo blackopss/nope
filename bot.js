@@ -4,7 +4,6 @@ const fs = require('fs');
 const moment = require('moment');
 const jimp = require('jimp');
 const Canvas = require('canvas');
-const prefix = "e"
 var dat = JSON.parse("{}");
 function forEachObject(obj, func) {
     Object.keys(obj).forEach(function (key) { func(key, obj[key]) })
@@ -27,7 +26,7 @@ client.on('message', async message => {
     var filter = m => m.author.id === message.author.id;
     var subChannel = message.guild.channels.find(c => c.name === 'طلبات');
    
-    if(command == prefix + 'شراء') {
+    if(command == 'شراء') {
         if(message.author.bot) return;
         if(message.channel.type === 'dm') return;
  
