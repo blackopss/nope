@@ -25,8 +25,6 @@ client.on('message', async message => {
     var filter = m => m.author.id === message.author.id;
         var modRole = message.guild.roles.find(r => r.name === 'x');
        
-        if(message.guild.member(message.author).roles.has(modRole.id)) return message.channel.send(':x: | ]');
-        if(!subChannel) return message.channel.send(':x: | يجب ان يتوفر روم اسمه ``');
     var subChannel = message.guild.channels.find(c => c.name === 'طلبات');
    
   if(message.content.startsWith('شراء')) {
