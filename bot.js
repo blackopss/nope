@@ -29,10 +29,7 @@ client.on('message', async message => {
         if(message.author.bot) return;
         if(message.channel.type === 'dm') return;
  
-        var modRole = message.guild.roles.find(r => r.name === 'x');
        
-        if(message.guild.member(message.author).roles.has(modRole.id)) return message.channel.send(':x: | معك الرتبة');
-        if(!subChannel) return message.channel.send(':x: | ');
                let embed = new Discord.RichEmbed()
 
         message.channel.send(`
@@ -108,7 +105,6 @@ client.on('message', async message => {
                                                 .addField('برفكس البوت,برفكسات البوتات', fromwhere)
                                                 .addField('اشياء اضافية', fa2dh)
                                                 .addField('حسابه', message.author)
-                                                .addField('ايدي حسابه', message.author.id, true)
                                                
                                                 subChannel.send(subMsg).then(msgS => {
                                                     msgS.react('✅').then(() => msgS.react('❎'))
