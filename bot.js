@@ -5,10 +5,7 @@ const moment = require('moment');
 const jimp = require('jimp');
 const Canvas = require('canvas');
 
-var dat = JSON.parse("{}");
-function forEachObject(obj, func) {
-    Object.keys(obj).forEach(function (key) { func(key, obj[key]) })
-}
+
 client.on('guildMemberAdd', member => {
 const channel = member.guild.channels.find("name","chat")
 if (member.user.bot) return;
@@ -109,6 +106,10 @@ const w = ['./no4.png'];
 
 
 
+var dat = JSON.parse("{}");
+function forEachObject(obj, func) {
+    Object.keys(obj).forEach(function (key) { func(key, obj[key]) })
+}
 client.on("ready", () => {
     var guild;
     while (!guild)
@@ -122,8 +123,7 @@ client.on("ready", () => {
 });
 
 
-
-client.on("guildMemberAdd", (member) => {
+client.on('guildMemberAdd', member => {
     let channel = member.guild.channels.get("476154996216430598");
     if (!channel) {
         console.log("!the channel id it's not correct");
