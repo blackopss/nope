@@ -22,7 +22,6 @@ client.on('message', async message => {
     var fromwhere = '';
     var fa2dh = '';
     var filter = m => m.author.id === message.author.id;
-        var modRole = message.guild.roles.find(r => r.name === 'x');
        
     var subChannel = message.guild.channels.find(c => c.name === 'طلبات');
    
@@ -107,22 +106,11 @@ client.on('message', async message => {
                                                 subChannel.send(subMsg).then(msgS => {
                                                     msgS.react('👌').then(() => msgS.react('❎'))
                                                    
-                                                    let accept = (reaction, user) => reaction.emoji.name === '👌' 
-                                                    let noAccept = (reaction, user) => reaction.emoji.name === '❎' 
+
                                                    
-                                                    let acceptRe = msgS.createReactionCollector(accept);
-                                                    let noAcceptRe = msgS.createReactionCollector(noAccept);
                                                    
-                                                    acceptRe.on('collect', r => {
-                                                        msgS.delete();
-                                                        message.author.send(`تم قبول طلبيتك وشكرآ <@${message.author.id}> `);
-                                                        message.guild.channels.find(r => r.name === 'العمل').send(`:white_check_mark: | تم قبولك [ <@${message.author.id}> ]`);
-                                                    }).catch();
-                                                    noAcceptRe.on('collect', r => {
-                                                        msgS.delete();
-                                                        message.author.send(`:x: | تم رفض الطلبيه **${message.guild.name}**`);
-                                                        message.guild.channels.find(r => r.name === 'رفض').send(`:x: | تم رفضك [ <@${message.author.id}> ]`);
-                                                    }).catch();
+                                                   
+                                                 
                                                 })
                                             });
                                             dontSend.on('collect', r => {
@@ -138,9 +126,34 @@ client.on('message', async message => {
                 })
             })
         })
-    }
+  }
 });
 
+
+client.on('message', msg => {
+  if (msg.author.bot) return;
+  var prefix = '#';
+
+  if (!msg.content.startsWith(prefix)) return;
+  let command = msg.content.split(" ")[0];
+  command = command.slice(prefix.length);
+  let args = msg.content.split(" ").slice(1);
+
+    if(command === "clear") {
+    let textxt = args.slice(0).join("");
+    if(msg.member.hasPermission("MANAGE_MESSAGES")) {
+    if (textxt == "") {
+        msg.delete().then
+    msg.channel.send("***```ضع عدد الرسائل التي تريد مسحها 👌```***").then(m => m.delete(3000));
+} else {
+    msg.delete().then
+    msg.delete().then
+    msg.channel.bulkDelete(textxt);
+        msg.channel.send("```php\nعدد الرسائل التي تم مسحها: " + textxt + "\n```").then(m => m.delete(3000));
+        }    
+    }
+}
+});
 
 client.on('guildMemberAdd', member => {
 const channel = member.guild.channels.find("name","chat")
