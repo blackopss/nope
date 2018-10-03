@@ -1,7 +1,7 @@
 const Discord = require('discord.js');
 
 const fs = require("fs"); 
-const canvas = require("canvas");
+const Canvas = require("canvas");
 const moment = require("moment");  
 const { Client, Util } = require('discord.js');  
 const jimp = require('jimp');   
@@ -18,6 +18,7 @@ const client = new Discord.Client();
 client.on('guildMemberAdd', member => {
      const welcomer =  member.guild.channels.find('name', 'chat');
 const w = ['./w1.png'];
+var Canvas = require("canvas");
 
          let Image = Canvas.Image,
             canvas = new Canvas(400, 200),
