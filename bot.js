@@ -1,4 +1,5 @@
-const adminprefix = "!"
+const Discord = require('discord.js');
+
 const fs = require("fs"); 
 const canvas = require("canvas");
 const moment = require("moment");  
