@@ -50,7 +50,7 @@ const w = ['./no3.png'];
                                     ctx.font = '30px Arial Bold';
                               ctx.fontSize = '20px';
                               ctx.fillStyle = "#FFFFFF";
-                                ctx.fillText(, 277, 138);
+                                ctx.fillText(`.`, 277, 138);
 
                                     ctx.font = '20px Arial Bold';
                               ctx.fontSize = '15px';
