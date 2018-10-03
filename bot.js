@@ -23,7 +23,6 @@ client.on('message', async message => {
     var age = '';
     var fromwhere = '';
     var fa2dh = '';
-    var filter = m => m.author.id === message.author.id;
     var subChannel = message.guild.channels.find(c => c.name === 'طلبات');
    
   if(message.content.startsWith('شراء')) {
@@ -50,8 +49,8 @@ client.on('message', async message => {
 **11:| بوت ميوزك الأدمن**
 **12:| بوت قرأن مجانآ لفترة محدوده**
 ---------------
-***لو حاب تشتري اكتب**
-``رقم الطلبيه فقط``
+***لو حاب تشتري اكتب*
+*رقم الطلبيه فقط*
 **مثال**
 **1**
 		`).then(msgS => {
