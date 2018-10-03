@@ -46,7 +46,7 @@ client.on("message", (message) => {
             });
         }).catch(console.error); 
     }
-    if (isCommand(message, "close")) {
+  if(message.content.startsWith('close')) {
         if (!message.channel.name.startsWith(`ticket-`)) return message.channel.send(`You can't use the close command outside of a ticket channel.`);
 
         message.channel.send(`Are you sure? Once confirmed, you cannot reverse this action!\nTo confirm, type \`c\`. This will time out in 10 seconds and be cancelled.`)
