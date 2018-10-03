@@ -16,54 +16,137 @@ client.on('ready', () => {
 
 
 
-client.on("message", (message) => {
-    
-  if(message.content.startsWith('تذكره')) {
-        const reason = message.content.split(" ").slice(1).join(" ");
-        if (!message.guild.roles.exists("name", "Elite")) return message.channel.send(`This server doesn't have a \`Support Team\` role made, so the ticket won't be opened.\nIf you are an administrator, make one with that name exactly and give it to users that should be able to see tickets.`);
-        if (message.guild.channels.exists("name", "تذكره شراء" + message.author.id)) return message.channel.send(`You already have a ticket open.`);
-        message.guild.createChannel(`تذكره شراء ${message.author.id}`, "text").then(c => {
-            let role = message.guild.roles.find("name", "Elite");
-            let role2 = message.guild.roles.find("name", "@everyone");
 
-            c.overwritePermissions(role, {
-                SEND_MESSAGES: true,
-                READ_MESSAGES: true
-            });
-            c.overwritePermissions(role2, {
-                SEND_MESSAGES: false,
-                READ_MESSAGES: false
-            });
-            c.overwritePermissions(message.author, {
-                SEND_MESSAGES: true,
-                READ_MESSAGES: true
-            });
-            message.channel.send(`تم فتح تذكره لك وشكرا , #${c.name}.`);
-            const embed = new Discord.RichEmbed()
-                .setColor(0xCF40FA)
-                .addField(`هاي ${message.author.username}!`, `شكرا لك على فتح تذكره شراء سيتم الرد عليك خلال دقائق وشكرا.`)
-                .setTimestamp();
-            c.send({
-                embed: embed
-            });
-        }).catch(console.error); 
-    }
-  if(message.content.startsWith('close')) {
-        if (!message.channel.name.startsWith(`تذكره شراء`)) return message.channel.send(`اسف لكن لا يمكنك استخدام هذا الامر خارج رومك لشراء التذكره.`);
+client.on('message', async message => {
+    var command = message.content.toLowerCase().split(" ")[0];
+    var name = '';
+    var age = '';
+    var fromwhere = '';/
+    var fa2dh = '';
+    var filter = m => m.author.id === message.author.id;
+    var subChannel = message.guild.channels.find(c => c.name === 'طلبات');
+   
+    if(command == prefix + 'شراء') {
+        if(message.author.bot) return;
+        if(message.channel.type === 'dm') return;
+ 
+        var modRole = message.guild.roles.find(r => r.name === 'x');
+       
+        if(message.guild.member(message.author).roles.has(modRole.id)) return message.channel.send(':x: | معك الرتبة');
+        if(!subChannel) return message.channel.send(':x: | ');
+               let embed = new Discord.RichEmbed()
 
-        message.channel.send(` لديك عشر ثواني وشكرا لك /``c``/ هل انت متاكد؟, لو متاكد اكتب `)
-            .then((m) => {
-                message.channel.awaitMessages(response => response.content === 'c', {
-                        max: 1,
-                        time: 10000,
-                        errors: ['time'],
+        message.channel.send(`
+**1:| بوت بروفايل**
+**2:| بوت رابط,متغير كل 24ساعة**
+**3:| بوت نسخة للسيرفر,في حال تعرض للتهكير**
+**4:| بوت ادمن فيه كل الاوامر الادمنيه**
+**5:| بوت ترحيب,مع تم دعوتك من قبل**
+**6:| بوت مانع الجحفلة***
+**7:| بوت ست اونلاين يعرض لك الاعضاء المتواجده في الرومات**
+**8:| بوت بردوكسات عام يشمل تحديد الرتبة**
+**9:| بوتات ميوزك6**
+**10:| بوتات ميوزك 5**
+**11:| بوت ميوزك الأدمن**
+**12:| بوت قرأن مجانآ لفترة محدوده**
+---------------
+***لو حاب تشتري اكتب**
+``رقم الطلبيه فقط``
+`مثال`
+**1**
+		`).then(msgS => {
+            message.channel.awaitMessages(filter, { max: 1, time: 30000, errors: ['time'] }).then(collected => {
+                name = collected.first().content;
+                collected.first().delete();
+                msgS.edit('**الحين اكتب اسم البوت ,اسامي البوتات.**').then(msgS => {
+                    message.channel.awaitMessages(filter, { max: 1, time: 30000, errors: ['time'] }).then(collected => {
+                        age = collected.first().content;
+                        collected.first().delete();
+                        msgS.edit(`
+						**ماذا تريد ان يكون برفكس البوت**
+						``(! مفتاح تشغيل البوت مثل )``
+						`).then(msgS => {
+                            message.channel.awaitMessages(filter, { max: 1, time: 30000, errors: ['time'] }).then(collected => {
+                                fromwhere = collected.first().content;
+                                collected.first().delete();
+                                msgS.edit('**هل لديك شى تبي تضيفة؟**').then(msgS => {
+                                    message.channel.awaitMessages(filter, { max: 1, time: 30000, errors: ['time'] }).then(collected => {
+                                        fa2dh = collected.first().content;
+                                        collected.first().delete();
+                                       
+                                        let embedS = new Discord.RichEmbed()
+                                        .setAuthor(message.author.tag, message.author.avatarURL)
+                                        .setThumbnail(message.author.avatarURL)
+                                        .setDescription('**\n:no_entry: هتريد التقديم؟**')
+                                        .setColor('GREEN')
+                                        .addField('رقم الطلبية', name, true)
+                                        .addField('اسم البوت,اسامي البوتات', age, true)
+                                        .addField('برفكس البوت,برفكسات البوتات', fromwhere, true)
+                                        .addField('اشياء اضافية', fa2dh, true)
+                                        .setTimestamp()
+                                        .setFooter(message.guild.name, message.guild.iconURL)
+                                       
+                                        msgS.delete();
+                                        message.channel.send(embedS).then(msgS => {
+                                            msgS.react('✅').then(() => msgS.react('❎'))
+                                           
+                                            let yesSure = (reaction, user) => reaction.emoji.name === '✅'  && user.id === message.author.id;
+                                            let no = (reaction, user) => reaction.emoji.name === '❎' && user.id === message.author.id;
+                                           
+                                            let yesSend = msgS.createReactionCollector(yesSure);
+                                            let dontSend = msgS.createReactionCollector(no);
+                                           
+                                            yesSend.on('collect', r => {
+                                                msgS.delete();
+                                                message.channel.send(':white_check_mark: | تم تقديم طلب الرجاء الانتظار سوف يتم الرد عليك في اقرب وقت وشكرآ ').then(msg => msg.delete(5000));
+                                               
+                                                let subMsg = new Discord.RichEmbed()
+                                                .setAuthor(message.author.tag, message.author.avatarURL)
+                                                .setColor('GREEN')
+                                                .setThumbnail(message.author.avatarURL)
+                                                .addField('رقم الطلبيه', name)
+                                                .addField('اسم البوت,اسامي البوتات', age)
+                                                .addField('برفكس البوت,برفكسات البوتات', fromwhere)
+                                                .addField('اشياء اضافية', fa2dh)
+                                                .addField('حسابه', message.author)
+                                                .addField('ايدي حسابه', message.author.id, true)
+                                               
+                                                subChannel.send(subMsg).then(msgS => {
+                                                    msgS.react('✅').then(() => msgS.react('❎'))
+                                                   
+                                                    let accept = (reaction, user) => reaction.emoji.name === '✅' 
+                                                    let noAccept = (reaction, user) => reaction.emoji.name === '❎' 
+                                                   
+                                                    let acceptRe = msgS.createReactionCollector(accept);
+                                                    let noAcceptRe = msgS.createReactionCollector(noAccept);
+                                                   
+                                                    acceptRe.on('collect', r => {
+                                                        msgS.delete();
+                                                        message.author.send(`تم قبول طلبيه **${message.guild.name}**`);
+                                                        message.guild.member(message.author).addRole(modRole.id);
+                                                        message.guild.channels.find(r => r.name === 'العمل').send(`:white_check_mark: | تم قبولك [ <@${message.author.id}> ]`);
+                                                    }).catch();
+                                                    noAcceptRe.on('collect', r => {
+                                                        msgS.delete();
+                                                        message.author.send(`:x: | تم رفض الطلبيه **${message.guild.name}**`);
+                                                        message.guild.channels.find(r => r.name === 'رفض').send(`:x: | تم رفضك [ <@${message.author.id}> ]`);
+                                                    }).catch();
+                                                })
+                                            });
+                                            dontSend.on('collect', r => {
+                                                msgS.delete();
+                                                message.channel.send(':x: | تم الغاء تقديمك');
+                                            });
+                                        })
+                                    })
+                                })
+                            })
+                        })
                     })
-                    .then((collected) => {
-                        message.channel.delete();
-                    })
-            });
+                })
+            })
+        })
     }
-
 });
 
 client.on('guildMemberAdd', member => {
