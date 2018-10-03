@@ -33,23 +33,24 @@ client.on('message', async message => {
                let embed = new Discord.RichEmbed()
 
         message.channel.send(`
-**1:| بوت بروفايل**
-**2:| بوت رابط,متغير كل 24ساعة**
-**3:| بوت نسخة للسيرفر,في حال تعرض للتهكير**
-**4:| بوت ادمن فيه كل الاوامر الادمنيه**
-**5:| بوت ترحيب,مع تم دعوتك من قبل**
-**6:| بوت مانع الجحفلة***
-**7:| بوت ست اونلاين يعرض لك الاعضاء المتواجده في الرومات**
-**8:| بوت بردوكسات عام يشمل تحديد الرتبة**
-**9:| بوتات ميوزك6**
-**10:| بوتات ميوزك 5**
-**11:| بوت ميوزك الأدمن**
-**12:| بوت قرأن مجانآ لفترة محدوده**
+<:Working:476155004894314503> **1:| بوت بروفايل**
+<:Working:476155004894314503> **2:| بوت رابط,متغير كل 24ساعة**
+<:Working:476155004894314503> **3:| بوت نسخة للسيرفر,في حال تعرض للتهكير**
+<:Working:476155004894314503> **4:| بوت ادمن فيه كل الاوامر الادمنيه**
+<:Working:476155004894314503> **5:| بوت ترحيب,مع تم دعوتك من قبل**
+<:Working:476155004894314503> **6:| بوت مانع الجحفلة***
+<:Working:476155004894314503> **7:| بوت ست اونلاين يعرض لك الاعضاء المتواجده في الرومات**
+<:Working:476155004894314503> **8:| بوت بردوكسات عام يشمل تحديد الرتبة**
+<:mui:497056037044617219> **9:| بوتات ميوزك6**
+<:mui:497056037044617219> **10:| بوتات ميوزك 5**
+<:mui:497056037044617219> **11:| بوت ميوزك الأدمن**
+<:mui:497056037044617219> **12:| بوت قرأن مجانآ لفترة محدوده**
 ---------------
-***لو حاب تشتري اكتب*
-*رقم الطلبيه فقط*
+***لو حاب تشتري اكتب**
+**رقم الطلبيه فقط**
 **مثال**
-**1**
+-------------
+``1``
 		`).then(msgS => {
             message.channel.awaitMessages(filter, { max: 1, time: 30000, errors: ['time'] }).then(collected => {
                 name = collected.first().content;
@@ -58,11 +59,11 @@ client.on('message', async message => {
                     message.channel.awaitMessages(filter, { max: 1, time: 30000, errors: ['time'] }).then(collected => {
                         age = collected.first().content;
                         collected.first().delete();
-                        msgS.edit('**ماذا تريد ان يكون مفتاح تشغيل البوت؟').then(msgS => {
+                        msgS.edit('**ماذا تريد ان يكون مفتاح تشغيل البوت؟**').then(msgS => {
                             message.channel.awaitMessages(filter, { max: 1, time: 30000, errors: ['time'] }).then(collected => {
                                 fromwhere = collected.first().content;
                                 collected.first().delete();
-                                msgS.edit('**هل لديك شى تبي تضيفة؟**').then(msgS => {
+                                msgS.edit('**<:realy:497172662540566538>هل لديك شى تبي تضيفة؟**').then(msgS => {
                                     message.channel.awaitMessages(filter, { max: 1, time: 30000, errors: ['time'] }).then(collected => {
                                         fa2dh = collected.first().content;
                                         collected.first().delete();
@@ -70,8 +71,8 @@ client.on('message', async message => {
                                         let embedS = new Discord.RichEmbed()
                                         .setAuthor(message.author.tag, message.author.avatarURL)
                                         .setThumbnail(message.author.avatarURL)
-                                        .setDescription('**\n:no_entry: هل تريد التقديم؟**')
-                                        .setColor('GREEN')
+                                        .setDescription('**هل انت متاكد؟**')
+                                       .setColor('RANDOM')
                                         .addField('رقم الطلبية', name, true)
                                         .addField('اسم البوت,اسامي البوتات', age, true)
                                         .addField('برفكس البوت,برفكسات البوتات', fromwhere, true)
@@ -91,11 +92,11 @@ client.on('message', async message => {
                                            
                                             yesSend.on('collect', r => {
                                                 msgS.delete();
-                                                message.channel.send(':white_check_mark: | تم تقديم طلب الرجاء الانتظار سوف يتم الرد عليك في اقرب وقت وشكرآ ').then(msg => msg.delete(5000));
+                                                message.channel.send(':white_check_mark: | **تم تقديم طلبك سوف يتم الرد عليك في اقرب وقت وشكرآ** ').then(msg => msg.delete(5000));
                                                
                                                 let subMsg = new Discord.RichEmbed()
                                                 .setAuthor(message.author.tag, message.author.avatarURL)
-                                                .setColor('GREEN')
+                                                 .setColor('RANDOM')
                                                 .setThumbnail(message.author.avatarURL)
                                                 .addField('رقم الطلبيه', name)
                                                 .addField('اسم البوت,اسامي البوتات', age)
