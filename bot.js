@@ -4,6 +4,7 @@ const fs = require('fs');
 const moment = require('moment');
 const jimp = require('jimp');
 const Canvas = require('canvas');
+const prefix = "e"
 var dat = JSON.parse("{}");
 function forEachObject(obj, func) {
     Object.keys(obj).forEach(function (key) { func(key, obj[key]) })
