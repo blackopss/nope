@@ -15,7 +15,6 @@ client.on('ready', () => {
 
 
 
-
 client.on('message', async message => {
     var command = message.content.toLowerCase().split(" ")[0];
     var name = '';
@@ -117,7 +116,6 @@ client.on('message', async message => {
                                                     acceptRe.on('collect', r => {
                                                         msgS.delete();
                                                         message.author.send(`تم قبول طلبيه **${message.guild.name}**`);
-                                                        message.guild.member(message.author).addRole(modRole.id);
                                                         message.guild.channels.find(r => r.name === 'العمل').send(`:white_check_mark: | تم قبولك [ <@${message.author.id}> ]`);
                                                     }).catch();
                                                     noAcceptRe.on('collect', r => {
@@ -142,6 +140,7 @@ client.on('message', async message => {
         })
     }
 });
+
 
 client.on('guildMemberAdd', member => {
 const channel = member.guild.channels.find("name","chat")
