@@ -105,7 +105,7 @@ client.on('message', async message => {
                                                 .addField('حسابه', message.author)
                                                
                                                 subChannel.send(subMsg).then(msgS => {
-                                                    msgS.react('✅').then(() => msgS.react('❎'))
+                                                    msgS.react('👌').then(() => msgS.react('❎'))
                                                    
                                                     let accept = (reaction, user) => reaction.emoji.name === '👌' 
                                                     let noAccept = (reaction, user) => reaction.emoji.name === '❎' 
