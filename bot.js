@@ -62,7 +62,7 @@ client.on('message', async message => {
                         collected.first().delete();
                         msgS.edit(`
 						**ماذا تريد ان يكون برفكس البوت**
-						``(! مفتاح تشغيل البوت مثل )``
+						``! مفتاح تشغيل البوت مثل ``
 						`).then(msgS => {
                             message.channel.awaitMessages(filter, { max: 1, time: 30000, errors: ['time'] }).then(collected => {
                                 fromwhere = collected.first().content;
@@ -75,7 +75,7 @@ client.on('message', async message => {
                                         let embedS = new Discord.RichEmbed()
                                         .setAuthor(message.author.tag, message.author.avatarURL)
                                         .setThumbnail(message.author.avatarURL)
-                                        .setDescription('**\n:no_entry: هتريد التقديم؟**')
+                                        .setDescription('**\n:no_entry: هل تريد التقديم؟**')
                                         .setColor('GREEN')
                                         .addField('رقم الطلبية', name, true)
                                         .addField('اسم البوت,اسامي البوتات', age, true)
