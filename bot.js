@@ -50,12 +50,12 @@ const w = ['./no3.png'];
                                     ctx.font = '30px Arial Bold';
                               ctx.fontSize = '20px';
                               ctx.fillStyle = "#FFFFFF";
-                                ctx.fillText(member.user.username, 277, 138);
+                                ctx.fillText(, 277, 138);
 
                                     ctx.font = '20px Arial Bold';
                               ctx.fontSize = '15px';
                               ctx.fillStyle = "#FFFFFF";
-                                ctx.fillText(`${hours}:${minutes}:${seconds} ${suffix}`, 314, 200);
+                                ctx.fillText(`.`, 314, 200);
                                                      var guild;
     while (!guild)
                         guild = member.guild
