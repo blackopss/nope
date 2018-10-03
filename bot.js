@@ -26,7 +26,7 @@ client.on('message', async message => {
     var filter = m => m.author.id === message.author.id;
     var subChannel = message.guild.channels.find(c => c.name === 'طلبات');
    
-    if(command == 'شراء') {
+  if(message.content.startsWith('شراء')) {
         if(message.author.bot) return;
         if(message.channel.type === 'dm') return;
  
