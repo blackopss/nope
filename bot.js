@@ -81,7 +81,7 @@ const w = ['./no3.png'];
                               ctx.font = '44px Arial';
                               ctx.fontSize = '28px';
                               ctx.fillStyle = "#FFFFFF";
-      ctx.fillText(`Welcome To ⤵`, 260, 44);
+      ctx.fillText(``, 260, 44);
 
 
                               //NAMEً
