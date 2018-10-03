@@ -102,8 +102,8 @@ client.on('message', async message => {
                                                 .addField('اسم البوت,اسامي البوتات', age)
                                                 .addField('برفكس البوت,برفكسات البوتات', fromwhere)
                                                 .addField('اشياء اضافية', fa2dh)
-                                                .addField('حسابه', message.author)
-	                                        .setImg('https://cdn.discordapp.com/attachments/476154996216430598/497177504662945792/unknown.png');
+                                                .addField('حساب المشتري', message.author)
+                                                 .setImage('https://cdn.discordapp.com/attachments/476154996216430598/497177504662945792/unknown.png')
                                                
                                                 subChannel.send(subMsg).then(msgS => {
                                                     msgS.react('👌').then(() => msgS.react('❎'))
