@@ -16,7 +16,6 @@ client.on('ready', () => {
 
 
 
-
 client.on('message', async message => {
     var command = message.content.toLowerCase().split(" ")[0];
     var name = '';
@@ -60,10 +59,7 @@ client.on('message', async message => {
                     message.channel.awaitMessages(filter, { max: 1, time: 30000, errors: ['time'] }).then(collected => {
                         age = collected.first().content;
                         collected.first().delete();
-                        msgS.edit(`
-						**ماذا تريد ان يكون برفكس البوت**
-						``! مفتاح تشغيل البوت مثل ``
-						`).then(msgS => {
+                        msgS.edit('**ماذا تريد ان يكون مفتاح تشغيل البوت؟').then(msgS => {
                             message.channel.awaitMessages(filter, { max: 1, time: 30000, errors: ['time'] }).then(collected => {
                                 fromwhere = collected.first().content;
                                 collected.first().delete();
