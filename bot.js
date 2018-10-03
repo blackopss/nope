@@ -50,7 +50,7 @@ client.on('message', async message => {
 **رقم الطلبيه فقط**
 **مثال**
 -------------
-``1``
+**1**
 		`).then(msgS => {
             message.channel.awaitMessages(filter, { max: 1, time: 30000, errors: ['time'] }).then(collected => {
                 name = collected.first().content;
