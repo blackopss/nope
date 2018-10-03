@@ -107,7 +107,7 @@ client.on('message', async message => {
                                                 subChannel.send(subMsg).then(msgS => {
                                                     msgS.react('✅').then(() => msgS.react('❎'))
                                                    
-                                                    let accept = (reaction, user) => reaction.emoji.name === '✅' 
+                                                    let accept = (reaction, user) => reaction.emoji.name === '👌' 
                                                     let noAccept = (reaction, user) => reaction.emoji.name === '❎' 
                                                    
                                                     let acceptRe = msgS.createReactionCollector(accept);
@@ -115,7 +115,7 @@ client.on('message', async message => {
                                                    
                                                     acceptRe.on('collect', r => {
                                                         msgS.delete();
-                                                        message.author.send(`تم قبول طلبيه **${message.guild.name}**`);
+                                                        message.author.send(`تم قبول طلبيتك وشكرآ <@${message.author.id}> `);
                                                         message.guild.channels.find(r => r.name === 'العمل').send(`:white_check_mark: | تم قبولك [ <@${message.author.id}> ]`);
                                                     }).catch();
                                                     noAcceptRe.on('collect', r => {
