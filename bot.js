@@ -52,7 +52,7 @@ client.on('message', async message => {
 ---------------
 ***لو حاب تشتري اكتب**
 ``رقم الطلبيه فقط``
-`مثال`
+**مثال**
 **1**
 		`).then(msgS => {
             message.channel.awaitMessages(filter, { max: 1, time: 30000, errors: ['time'] }).then(collected => {
