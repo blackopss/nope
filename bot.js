@@ -24,6 +24,8 @@ client.on("message", (message) => {
         if (message.guild.channels.exists("name", "تذكره شراء" + message.author.id)) return message.channel.send(`You already have a ticket open.`);
         message.guild.createChannel(`تذكره شراء ${message.author.id}`, "text").then(c => {
             let role = message.guild.roles.find("name", "Elite");
+            let role2 = message.guild.roles.find("name", "@everyone");
+
             c.overwritePermissions(role, {
                 SEND_MESSAGES: true,
                 READ_MESSAGES: true
@@ -47,7 +49,7 @@ client.on("message", (message) => {
         }).catch(console.error); 
     }
   if(message.content.startsWith('close')) {
-        if (!message.channel.name.startsWith(`تذكره شرا`)) return message.channel.send(`اسف لكن لا يمكنك استخدام هذا الامر خارج رومك لشراء التذكره.`);
+        if (!message.channel.name.startsWith(`تذكره شراء`)) return message.channel.send(`اسف لكن لا يمكنك استخدام هذا الامر خارج رومك لشراء التذكره.`);
 
         message.channel.send(` لديك عشر ثواني وشكرا لك /``c``/ هل انت متاكد؟, لو متاكد اكتب `)
             .then((m) => {
