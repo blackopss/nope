@@ -19,17 +19,17 @@ client.on('message', async message => {
   if(message.author.bot) return;
    if(!temp[message.guild.id]) temp[message.guild.id] = {
     time: "3000",
-     category : 'رومات مؤقتة',
-      channel : 'ظغط هنا لنصع روم مؤقت'
+     category : 'Temporary Channels',
+      channel : 'انشاء روم مؤقت'
        }
-        if(message.content.startsWith('$temp on')){
+        if(message.content.startsWith('#temp on')){
          if(!message.member.hasPermission(`MANAGE_GUILD`)) return;
-          var ggg= message.guild.createChannel('رومات مؤقتة', 'category').then(cg => {
-           var ccc =message.guild.createChannel('اظغط هنا لنصع روم مؤقت', 'voice').then(ch => {
+          var ggg= message.guild.createChannel('Temporary Channels', 'category').then(cg => {
+           var ccc =message.guild.createChannel('انشاء روم مؤقت', 'voice').then(ch => {
             ch.setParent(cg)
              message.channel.send('**Done ,**')
               client.on('message' , message => {
-               if(message.content === '$temp off') {
+               if(message.content === '#temp off') {
                 if(!message.member.hasPermission(`MANAGE_GUILD`)) return;
                  cg.delete()
                   ch.delete()
@@ -41,7 +41,7 @@ client.on('message', async message => {
                         if (message.content.startsWith("temptime")) {
                          if(!message.member.hasPermission(`MANAGE_GUILD`)) return;
                           let newTime= message.content.split(' ').slice(1).join(" ")
-                          if(!newTime) return message.reply(`**${prefix}temptime <time>  \`1000 = 1s\`**`)
+                          if(!newTime) return message.reply(`**#temptime <time>  \`1000 = 1s\`**`)
 	                 if(isNaN(newTime)) return message.reply(`** The Time Be Nambers :face_palm: **`);
 	                if(newTime < 1) return message.reply(`**The Time Be Up \`3000s\`**`)
                        temp[message.guild.id].time = newTime
