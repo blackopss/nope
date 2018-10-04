@@ -38,7 +38,7 @@ client.on('message', async message => {
                      });
                       const time = temp[message.guild.id].time
                        client.on('message' , message => {
-                        if (message.content.startsWith(prefix + "temptime")) {
+                        if (message.content.startsWith("temptime")) {
                          if(!message.member.hasPermission(`MANAGE_GUILD`)) return;
                           let newTime= message.content.split(' ').slice(1).join(" ")
                           if(!newTime) return message.reply(`**${prefix}temptime <time>  \`1000 = 1s\`**`)
