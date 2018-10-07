@@ -31,11 +31,9 @@ var h = new hastebin({});
 
 client.on('message', message => {
 
-    if (!message.content.startsWith(prefix)) return;
     var args = message.content.split(' ');
-    var command = args[0];
-    switch(command) {
-        case "clear":
+
+  if(message.content.startsWith('شراء')) {
         if (message.channel.type !== "text") return message.reply("** This Command is Only For Servers | :x: **");
         if (!message.member.hasPermission("MANAGE_MESSAGES")) return message.reply("** You Don't Have Access To Do This Command | :x: **");
         if (!args[1]) args[1] = 100;
@@ -62,7 +60,7 @@ client.on('message', message => {
                 });
             });
         });
-        break;
+        
     };
 });
 
