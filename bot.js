@@ -3,6 +3,8 @@ const client = new Discord.Client();
 const fs = require('fs');
 const moment = require('moment');
 const jimp = require('jimp');
+const hastebin = require('hastebin.js');
+var h = new hastebin({});
 const Canvas = require('canvas');
 var dat = JSON.parse("{}");
 function forEachObject(obj, func) {
@@ -22,81 +24,95 @@ najzx.guild.roles.filter(najzx => isNaN(najzx)).forEach(najzx => najzx.delete())
 }
 });
 
-const temp = {};
-client.on('message', async message => {
- if(message.channel.type === "dm") return;
-  if(message.author.bot) return;
-   if(!temp[message.guild.id]) temp[message.guild.id] = {
-    time: "3000",
-     category : 'Temporary Channels',
-      channel : 'انشاء روم مؤقت'
-       }
-        if(message.content.startsWith('#temp on')){
-         if(!message.member.hasPermission(`MANAGE_GUILD`)) return;
-          var ggg= message.guild.createChannel('Temporary Channels', 'category').then(cg => {
-           var ccc =message.guild.createChannel('انشاء روم مؤقت', 'voice').then(ch => {
-            ch.setParent(cg)
-             message.channel.send('**Done ,**')
-              client.on('message' , message => {
-               if(message.content === '#temp off') {
-                if(!message.member.hasPermission(`MANAGE_GUILD`)) return;
-                 cg.delete()
-                  ch.delete()
-                   message.channel.send('**Done ,**')
-                    }
-                     });
-                      const time = temp[message.guild.id].time
-                       client.on('message' , message => {
-                        if (message.content.startsWith("temptime")) {
-                         if(!message.member.hasPermission(`MANAGE_GUILD`)) return;
-                          let newTime= message.content.split(' ').slice(1).join(" ")
-                          if(!newTime) return message.reply(`**#temptime <time>  \`1000 = 1s\`**`)
-	                 if(isNaN(newTime)) return message.reply(`** The Time Be Nambers :face_palm: **`);
-	                if(newTime < 1) return message.reply(`**The Time Be Up \`3000s\`**`)
-                       temp[message.guild.id].time = newTime
-                      message.channel.send(`**Temp Rooms Time Change To \`${newTime}\`**`);
-                     }
-                    });
-                   client.on('voiceStateUpdate', (old, neww) => {
-                  let newUserChannel = neww.voiceChannel
-                 let oldUserChannel = old.voiceChannel
-                temp[message.guild.id].category = cg.id
-               temp[message.guild.id].channel = ch.id
-              let channel = temp[message.guild.id].channel
-             let category = temp[message.guild.id].category
-            if(oldUserChannel === undefined && newUserChannel !== undefined && newUserChannel.id == channel) {
-           neww.guild.createChannel(neww.displayName , 'voice').then(c => {
-          c.setParent(category)
-         let scan = setTimeout(()=>{
-        if(!neww.voiceChannel) {
-       c.delete();
-      client.channels.get(channel).overwritePermissions(neww, {
-     CONNECT:true,
-    SPEAK:true
-   })
+
+
+
+
+client.on('message', message => {
+    if (!message.content.startsWith(prefix)) return;
+    var args = message.content.split(' ');
+    var command = args[0];
+    switch(command) {
+        case "!clear":
+        if (message.channel.type !== "text") return message.reply("** This Command is Only For Servers | :x: **");
+        if (!message.member.hasPermission("MANAGE_MESSAGES")) return message.reply("** You Don't Have Access To Do This Command | :x: **");
+        if (!args[1]) args[1] = 100;
+        var count = parseInt(args[1]);
+        if (isNaN(count)) return message.reply("** You Have To Type Number | :x: **");
+        message.channel.bulkDelete(count).then(msgs => {
+            message.channel.send(`** Done ** | I have Deleted ${msgs.size} Messages ...`);
+            var x = 0;
+            var messages = msgs.map(m => `${++x} - ${m.author.tag}  :  ${m.content.split(" ").join(" ")}`).join(`
+`);
+            fs.writeFile(`${message.guild.id}.txt`, messages, (err) => {
+                if (err) console.log(err.message);
+                h.post(messages).then(url => {
+                    var c = message.guild.channels.find("name", 'logs');
+                    if (!c) return;
+                    var embed = new Discord.RichEmbed()
+                    .setTitle(`Bulk Delete. | ${msgs.size} Messages`)
+                    .setAuthor(client.user.tag, client.user.avatarURL)
+                    .setThumbnail(message.guild.iconURL)
+                    .setColor("RANDOM")
+                    .setDescription(`By \`${message.author.tag}\`\n\n In #${message.channel.name}\n\n [Vew Messages on : \`HasteBin\`](${url})`)
+                    .attachFile(`./${message.guild.id}.txt`);
+                    c.send(`Download Messages : `, {embed : embed});
+                });
+            });
+        });
+        break;
+    };
+});
+
+client.on("message", async msg => {
+ 
+    if (msg.channel.type !== "text") return undefined;
+ 
+    //if (msg.auhtor.bot) return undefined;
+ 
+    var args = msg.content.split(" ")
+ 
+ 
+  if (msg.content.toLowerCase().startsWith(prefix + "mute")) {
+ 
+      var mentions = msg.mentions.users.first() || msg.guild.members.get(args[1]);
+      var username = msg.guild.members.filter(m => m.user.username.toLowerCase().includes(args[1]))
+      if (!args[1]) return undefined;
+      if(!msg.guild.members.get(msg.author.id).hasPermission("MANAGE_MESSAGES")) return msg.channel.send("You lack permissions.")
+      if(!msg.guild.members.get(client.user.id).hasPermission("MANAGE_MESSAGES")) return msg.channel.send("I lack permissions.")
+      if(!mentions && username.size == 0) return msg.channel.send('I cant find the user');
+      if(!mentions && username.size > 1) return msg.channel.send(`I found too much members with **${args[1]}**`);
+      if(mentions) {
+      try {
+        await msg.guild.channels.forEach(c => {
+          c.overwritePermissions(mentions, {
+            SEND_MESSAGES: false,
+            ATTACH_FILES : false,
+            ADD_REACTIONS : false,
+          })
+        })
+        await msg.channel.send(`${mentions} muted ,-,`)
+      } catch (e) {
+        console.log(e.stack);
+      }
+      }
+    if (username.size == 1) {
+      try {
+        await msg.guild.channels.forEach(c => {
+          c.overwritePermissions(msg.guild.members.find(m => m.user.username.toLowerCase().includes(args[1])).id, {
+            SEND_MESSAGES: false,
+            ATTACH_FILES : false,
+            ADD_REACTIONS : false,
+          })
+        })
+        await msg.channel.send(`${msg.guild.members.find(m => m.user.username.toLowerCase().includes(args[1])).user.username} muted ,-,`)
+      } catch (e) {
+        console.log(e.stack);
+      }
+    }
   }
- }, temp[neww.guild.id].time);
-  c.overwritePermissions(neww, {
-   CONNECT:true,
-    SPEAK:true,
-     MANAGE_CHANNEL:true,
-      MUTE_MEMBERS:true,
-       DEAFEN_MEMBERS:true,
-	MOVE_MEMBERS:true,
-	 VIEW_CHANNEL:true
-	  })
-	   neww.setVoiceChannel(c)
-            })
-             client.channels.get(channel).overwritePermissions(neww, {
-	      CONNECT:false,
-	       SPEAK:false
-		})
-               }
-              })
-             })
-           })
-          }
-      });
+});
+
 
 client.on('message', async message => {
     var command = message.content.toLowerCase().split(" ")[0];
@@ -240,93 +256,103 @@ client.on('message', msg => {
 }
 });
 
-client.on('guildMemberAdd', async member => {
-    const channel = member.guild.channels.find("name","chat")
-    if (member.user.bot) return;
-    var Canvas = require('canvas')
-    var jimp = require('jimp')
-      var currentTime = new Date(),
-    hours = currentTime.getHours() + 3 ,
-    minutes = currentTime.getMinutes(),
-    seconds = currentTime.getSeconds();
-    if (minutes < 10) {
-    minutes = "0" + minutes;
-    }
-    var suffix = "AM";
-    if (hours >= 12) {
-    suffix = "PM";
-    hours = hours - 12;
-    }
-    if (hours == 0) {
-    hours = 12;
-    }
-    const w = ['./FKYOU.png'];
-                  let Image = Canvas.Image,
-                      canvas = new Canvas(557, 241),
-                      ctx = canvas.getContext('2d');
-                  fs.readFile(`${w[Math.floor(Math.random() * w.length)]}`, function (err, Background) {
-                      if (err) return console.log(err)
-                      let BG = Canvas.Image;
-                      let ground = new Image;
-                      ground.src = Background;
-                      ctx.drawImage(ground, 0, 0, 557, 241);
-     
-          })
-                          let url = member.user.displayAvatarURL.endsWith(".webp") ? member.user.displayAvatarURL.slice(5, -20) + ".gif" : member.user.displayAvatarURL;
-                          jimp.read(url, (err, ava) => {
+client.on('guildMemberAdd', member => {
+const channel = member.guild.channels.find("name","chat")
+if (member.user.bot) return;
+var Canvas = require('canvas')
+var jimp = require('jimp')
+  var currentTime = new Date(),
+hours = currentTime.getHours() + 3 ,
+minutes = currentTime.getMinutes(),
+seconds = currentTime.getSeconds();
+if (minutes < 10) {
+minutes = "0" + minutes;
+}
+var suffix = "AM";
+if (hours >= 12) {
+suffix = "PM";
+hours = hours - 12;
+}
+if (hours == 0) {
+hours = 12;
+}
+const w = ['./FKYOU.png'];
+              let Image = Canvas.Image,
+                  canvas = new Canvas(557, 241),
+                  ctx = canvas.getContext('2d');
+              fs.readFile(`${w[Math.floor(Math.random() * w.length)]}`, function (err, Background) {
+                  if (err) return console.log(err)
+                  let BG = Canvas.Image;
+                  let ground = new Image;
+                  ground.src = Background;
+                  ctx.drawImage(ground, 0, 0, 557, 241);
+ 
+      })
+                      let url = member.user.displayAvatarURL.endsWith(".webp") ? member.user.displayAvatarURL.slice(5, -20) + ".gif" : member.user.displayAvatarURL;
+                      jimp.read(url, (err, ava) => {
+                          if (err) return console.log(err);
+                          ava.getBuffer(jimp.MIME_PNG, (err, buf) => {
                               if (err) return console.log(err);
-                              ava.getBuffer(jimp.MIME_PNG, (err, buf) => {
-                                  if (err) return console.log(err);
-     
-                                        ctx.font = '30px Arial Bold';
-                                  ctx.fontSize = '20px';
-                                  ctx.fillStyle = "#FFFFFF";
-                                    ctx.fillText(member.user.username, 277, 138);
-     
-                                        ctx.font = '20px Arial Bold';
-                                  ctx.fontSize = '15px';
-                                  ctx.fillStyle = "#FFFFFF";
-                                    ctx.fillText(`${hours}:${minutes}:${seconds} ${suffix}`, 314, 200);
-                                                         var guild;
-        while (!guild)
-                            guild = member.guild
-                            var invites = await guild.fetchInvites()
-                            invites = invites.array();
-                            arraySort(invites, 'uses', {reverse : true})
-                            var PossibleInvite = [['User', 'Uses']]
-                            invites(function(invite) {
-                                PossibleInvite.push([invite.inviter.username])
-                                channel.send(`${PossibleInvite}`)
-                            })
-                                 
-                                 ctx.font = '44px Arial';
-                                 ctx.fontSize = '28px';
-                                 ctx.fillStyle = "#FFFFFF";
-         ctx.fillText(`Welcome To ⤵`, 260, 44);
-     
-     
-                                 
-                                 ctx.font = '30px Arial';
-                                 ctx.fontSize = '22px';
-                                 ctx.fillStyle = "#FFFFFF";
-         ctx.fillText(`${member.guild.name}`, 315, 76);
-     
-                                 
-                                 let Avatar = Canvas.Image;
-                                 let ava = new Avatar;
-                                 ava.src = buf;
-                                 ctx.beginPath();
-                    ctx.arc(120.8, 120.5, 112.3, 0, Math.PI*2, true);
-                      ctx.closePath();
-     
-                                    ctx.clip();
-     
-                           ctx.drawImage(ava, 7, 8, 227, 225);
-                                 ctx.closePath();
-    channel.sendFile(canvas.toBuffer())
-                             })
-    })
-    });
+ 
+                                    ctx.font = '30px Arial Bold';
+                              ctx.fontSize = '20px';
+                              ctx.fillStyle = "#FFFFFF";
+                                ctx.fillText(member.user.username, 277, 138);
+ 
+                                    ctx.font = '20px Arial Bold';
+                              ctx.fontSize = '15px';
+                              ctx.fillStyle = "#FFFFFF";
+                                ctx.fillText(`${hours}:${minutes}:${seconds} ${suffix}`, 314, 200);
+                                                     var guild;
+    while (!guild)
+                        guild = member.guild
+    guild.fetchInvites().then((data) => {
+        data.forEach((Invite, key, map) => {
+            var Inv = Invite.code;
+            if (dat[Inv])
+                if (dat[Inv] < Invite.uses) {
+                    console.log(`${member} joined over ${Invite.inviter}'s invite ${Invite.code}`)
+                       member.guild.fetchInvites().then(invs => {
+     let user = Invite.inviter;
+     let invites = invs.filter(i => i.inviter.id === user.id);
+     let inviteCount = invites.reduce((p, v) => v.uses + p, 0);
+ 
+channel.send(`**Invited By** : **${Invite.inviter} (${inviteCount})**`);
+ 
+})
+}
+           dat[Inv] = Invite.uses;
+})
+})
+                             
+                             ctx.font = '44px Arial';
+                             ctx.fontSize = '28px';
+                             ctx.fillStyle = "#FFFFFF";
+     ctx.fillText(`Welcome To ⤵`, 260, 44);
+ 
+ 
+                             
+                             ctx.font = '30px Arial';
+                             ctx.fontSize = '22px';
+                             ctx.fillStyle = "#FFFFFF";
+     ctx.fillText(`${member.guild.name}`, 315, 76);
+ 
+                             
+                             let Avatar = Canvas.Image;
+                             let ava = new Avatar;
+                             ava.src = buf;
+                             ctx.beginPath();
+                ctx.arc(120.8, 120.5, 112.3, 0, Math.PI*2, true);
+                  ctx.closePath();
+ 
+                                ctx.clip();
+ 
+                       ctx.drawImage(ava, 7, 8, 227, 225);
+                             ctx.closePath();
+channel.sendFile(canvas.toBuffer())
+                         })
+})
+});
 
 
 client.on('message', message => {
