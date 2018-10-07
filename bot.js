@@ -28,7 +28,6 @@ client.on('ready', () => {
 
 const hastebin = require('hastebin.js');
 var h = new hastebin({});
-var prefix = "#";
 
 client.on('message', message => {
 
