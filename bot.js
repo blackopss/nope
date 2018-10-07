@@ -3,8 +3,7 @@ const client = new Discord.Client();
 const fs = require('fs');
 const moment = require('moment');
 const jimp = require('jimp');
-const hastebin = require('hastebin.js');
-var h = new hastebin({});
+
 const Canvas = require('canvas');
 var dat = JSON.parse("{}");
 function forEachObject(obj, func) {
@@ -27,8 +26,12 @@ client.on('ready', () => {
 
 
 
+const hastebin = require('hastebin.js');
+var h = new hastebin({});
+var prefix = "#";
 
 client.on('message', message => {
+
     if (!message.content.startsWith(prefix)) return;
     var args = message.content.split(' ');
     var command = args[0];
