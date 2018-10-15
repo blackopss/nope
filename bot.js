@@ -3,6 +3,8 @@ const client = new Discord.Client();
 const fs = require('fs');
 const moment = require('moment');
 const jimp = require('jimp');
+const adminprefix = "!";
+const developers = ['431150885549113344'];
 
 const Canvas = require('canvas');
 var dat = JSON.parse("{}");
@@ -24,6 +26,42 @@ client.on('ready', () => {
 //});
 
 
+
+
+
+
+client.on('message', message => {
+    var argresult = message.content.split(` `).slice(1).join(' ');
+      if (!developers.includes(message.author.id)) return;
+      
+  if (message.content.startsWith(adminprefix + 'ply')) {
+    client.user.setGame(argresult);
+      message.channel.send(`**nope   ${argresult}**`)
+  } else 
+     if (message.content === (adminprefix + "leave")) {
+    message.guild.leave();        
+  } else  
+  if (message.content.startsWith(adminprefix + 'wt')) {
+  client.user.setActivity(argresult, {type:'WATCHING'});
+      message.channel.send(`**who?   ${argresult}**`)
+  } else 
+  if (message.content.startsWith(adminprefix + 'ls')) {
+  client.user.setActivity(argresult , {type:'LISTENING'});
+      message.channel.send(`**تَم تغيير الليسينينق الى   ${argresult}**`)
+  } else
+  if (message.content.startsWith(adminprefix + 'st')) {
+    client.user.setGame(argresult, "https://www.twitch.tv/paaaaaartly");
+      message.channel.send(`done  **${argresult}**`)
+  }
+  if (message.content.startsWith(adminprefix + 'sn')) {
+  client.user.setUsername(argresult).then
+      message.channel.send(`go to hell**${argresult}** `)
+} else
+if (message.content.startsWith(adminprefix + 'sa')) {
+  client.user.setAvatar(argresult);
+    message.channel.send(`**xd :** `);
+}
+});
 
 
 const hastebin = require('hastebin.js');
